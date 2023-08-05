@@ -8,7 +8,11 @@ module Api
       end
     
       def show
-        render json: @user
+
+      @user = User.includes(posts: :comments).find(params[:id])
+      render json: @user.to_json(include: { posts: { include: :comments } })
+      
+    
       end
   
       def create
