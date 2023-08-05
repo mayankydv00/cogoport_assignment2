@@ -6,7 +6,7 @@ module Api
         @users = User.all
         render json: @users
       end
-  
+    
       def show
         render json: @user
       end
@@ -17,7 +17,7 @@ module Api
         if @user.save
           render json: @user, status: :created
         else
-          render json: @user.errors, status: :unprocessable_entity
+          render json: { errors: @user.errors.full_messages } , status: :unprocessable_entity
         end
       end
   
