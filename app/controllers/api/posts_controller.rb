@@ -4,7 +4,6 @@ module Api
   
       def index
         @posts = Post.includes(:comments)
-        # @comment = Comment.all
         render json: @posts.to_json(include: :comments) 
       end
       
