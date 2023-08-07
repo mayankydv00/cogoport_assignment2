@@ -14,6 +14,7 @@ module Api
   
       def create
         @comment = Comment.new(comment_params)
+        @comment.user_id = @user.id
         if @comment.save
           render json: @comment, status: :created
         else
