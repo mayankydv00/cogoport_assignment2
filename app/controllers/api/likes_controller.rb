@@ -6,8 +6,10 @@ class Api::LikesController < ApplicationController
         render json: @posts 
     end
 
+    
 
-    def comment_params
+
+    def likes_params
         params.require(:posts).permit( :post_id )
     end
 

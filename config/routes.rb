@@ -3,11 +3,14 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  Rails.application.routes.draw do
-    namespace :api do
+  
+   
+ namespace :api do
       resources :users
+      get 'users/:id/followers', to: 'users#followers'
+    get 'users/:id/following', to: 'users#following'
     end
-  end
+  
 
   namespace :api do
     post '/login', to: 'sessions#create'
@@ -17,6 +20,10 @@ Rails.application.routes.draw do
   
     namespace :api do
       resources :posts
+    end
+
+    namespace :api do
+      resources :follows 
     end
  
     namespace :api do
