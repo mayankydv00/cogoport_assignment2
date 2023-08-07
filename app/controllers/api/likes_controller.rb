@@ -13,4 +13,5 @@ class Api::LikesController < ApplicationController
         params.require(:posts).permit( :post_id )
     end
 
+    
 end

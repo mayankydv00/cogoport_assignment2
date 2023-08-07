@@ -12,15 +12,14 @@ Rails.application.routes.draw do
     end
   
 
-  namespace :api do
-    post '/login', to: 'sessions#create'
-    delete '/logout', to: 'sessions#destroy'
-  end
+  
 
+   post 'login', to: 'authorization#create'
   
     namespace :api do
       resources :posts
     end
+  
 
     namespace :api do
       resources :follows 
@@ -41,6 +40,12 @@ Rails.application.routes.draw do
       end
     end
     
+
+    # namespace :api do
+  #   post '/login', to: 'sessions#create'
+  #   delete '/logout', to: 'sessions#destroy'
+  # end
+  
   
   
 end

@@ -1,5 +1,6 @@
 module Api
     class PostsController < ApplicationController
+      before_action :authenticate
       before_action :set_post, only: [:show, :update, :destroy]
   
       def index
@@ -34,13 +35,14 @@ module Api
       end
       
       def show
-        # render json: @post
+      
         @posts = Post.includes(:comments).find(params[:id])
         render json: @posts.to_json(include: :comments)
       end
     
       def create
         @post = Post.new(post_params)
+        @post.author = @user.id
         if @post.save
           render json: @post, status: :created
         else
@@ -78,7 +80,22 @@ module Api
       def post_params
         params.permit(:author, :img , :title, :no_of_likes, :category)
       end
+
+      def authenticate
+
+        key = request.headers['Authorization']
+        token = key.split(' ').last if key 
+    
+        begin
+          decoded_token = JWT.decode(token, 'ASDFGH', true, algorithm: 'HS256')
+          render json: {error: "Your token is invalid"} if !decoded_token[0]['author']
+          @user = User.find(decoded_token[0]['author'])
+        rescue JWT::DecodeError
+          render json: { error: "Unauthorized user" }, status: :unauthorized
+        end
     end
 
   end
+
+end
   
